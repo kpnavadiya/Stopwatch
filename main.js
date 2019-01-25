@@ -8,7 +8,10 @@ var hh = document.getElementById('houers'),
 const start = document.getElementById('start'),
       stop = document.getElementById('stop');
       reset = document.getElementById('reset');
-      lapListContent = document.getElementById('lapList');
+      lapListContent = document.getElementById('lapList'),
+      showLapHistory = document.getElementById('historyList'),
+      shows = document.getElementById('history');
+
 
       let mili = 0,
       second = 0,
@@ -25,7 +28,8 @@ function listener() {
     start.addEventListener('click', timeSet);
     stop.addEventListener('click',pauseTimer);
     reset.addEventListener('click', resetTimer); 
-    lap.addEventListener('click', getLap);   
+    lap.addEventListener('click', lapTimer);
+    shows.addEventListener('click', show);   
 }
 
 // Function
@@ -80,28 +84,75 @@ function resetTimer() {
 
 // Count Stopatch Lap
 function lapTimer() {
-    // console.log(houers);
-    //Create a <tr>
+        count();
     const lapRow = document.createElement('tr');
     
     // Build a templet for lap
     lapRow.innerHTML = `
             <tr>
                 
-                <td> ${houers}: ${minute}: ${second}: ${mili} </td>
+            </tr>
+            <tr>
+            <td> ${houers}: ${minute}: ${second}: ${mili} </td>
+            <td> ${lepTime.houers}: ${lepTime.minute}: ${lepTime.second}: ${lepTime.mili}</td>
             </tr>
     `;
     // Add into Html
-    lapListContent.appendChild(lapRow);
+    
+    lapListContent.appendChild(lapRow);    
+}
+let t=0;
+
+let lepTime = {
+    houers  , minute , second , mili };
+function count() {
+   
+    saveInlocal(second);
 }
 
-function getLap(){
-    const lapList = {
-        houers : document.getElementById("houers").textContent,
-        minute : document.getElementById("minute").textContent,
-        second : document.getElementById("second").textContent,
-        mili : document.getElementById("mili").textContent
-    } 
-    lapTimer(lapList);
-    //console.log(lapList);
+// Save into local storage
+function saveInlocal(second) {
+    
+    let timeStore = getTimeFromStorage();
+    
+    //add into local storage
+    timeStore.push(second);
+    
+    // save as string into localStorage
+    localStorage.setItem('timeStore', JSON.stringify(timeStore));
+    
+}
+
+// get time into storage
+function getTimeFromStorage() {
+    let timeStore;
+    
+    // Check if something exist on storage otherwise it create empty array
+    if(localStorage.getItem('timeStore') === null) {
+        timeStore = [];
+    } else {
+        timeStore = JSON.parse(localStorage.getItem('timeStore'));
+        
+    }
+    return timeStore;
+}
+
+// print the history of the lap
+function show() {
+    let timess = getTimeFromStorage();
+
+    //count all lap into loop
+    timess.forEach(function(second) {
+        //create <tr> tage into html
+        const row = document.createElement('tr');
+
+        //print on html
+        row.innerHTML = `
+            <tr>
+                <td>${second.second} </td>
+            </tr>
+            `;
+            showLapHistory.appendChild(row);
+    });
+    
 }
