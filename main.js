@@ -7,9 +7,14 @@ var hh = document.getElementById('houers'),
 
 const start = document.getElementById('start'),
       stop = document.getElementById('stop');
+      reset = document.getElementById('reset');
 
-
-// Action Listener
+      let mili = 0,
+      second = 0,
+      minute = 0,
+      houers = 0,
+      timer=0;
+      // Action Listener
 
 listener();
 
@@ -17,20 +22,15 @@ listener();
 function listener() {
     // When start a stopwatch    
     start.addEventListener('click', timeSet);
-    stop.addEventListener('click',pause);    
+    stop.addEventListener('click',pauseTimer);
+    reset.addEventListener('click', resetTimer);    
 }
 
 // Function
 
-let mili = 0,
-    second = 0,
-    minute = 0,
-    houers = 0,
-    timer;
-    
-
 function timeSet() {
-        // Calculation of the time   
+     
+    // Calculation of the time   
         mili++;
         printTime(houers,minute,second,mili);
     if(mili === 10) {
@@ -50,7 +50,7 @@ function timeSet() {
     // Reapet every 100ms time 
      timer = setTimeout(function(){
          timeSet() }, 100);   
-        
+    start.innerHTML = "Resume";    
 }
 
 // Print time on Html        
@@ -62,10 +62,17 @@ function printTime(h,m,s,mi) {
 }
 
 // Pause Stopwatch
-function pause(mili,second,minute,houers) {
+function pauseTimer() {
     // When stop button click
-   clearInterval(timer);
-    
+   clearTimeout(timer);   
+}
 
+// Reset Stopwatch
+function resetTimer() {
+    //it will start from(0:0:0:0)
+    clearTimeout(timer);
+    start.innerHTML = 'Start';
+    printTime(houers = 0,minute = 0,second = 0,mili = 0);
+   
 }
 
