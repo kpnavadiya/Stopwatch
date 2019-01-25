@@ -8,6 +8,7 @@ var hh = document.getElementById('houers'),
 const start = document.getElementById('start'),
       stop = document.getElementById('stop');
       reset = document.getElementById('reset');
+      lapListContent = document.getElementById('lapList');
 
       let mili = 0,
       second = 0,
@@ -23,7 +24,8 @@ function listener() {
     // When start a stopwatch    
     start.addEventListener('click', timeSet);
     stop.addEventListener('click',pauseTimer);
-    reset.addEventListener('click', resetTimer);    
+    reset.addEventListener('click', resetTimer); 
+    lap.addEventListener('click', getLap);   
 }
 
 // Function
@@ -76,3 +78,30 @@ function resetTimer() {
    
 }
 
+// Count Stopatch Lap
+function lapTimer() {
+    // console.log(houers);
+    //Create a <tr>
+    const lapRow = document.createElement('tr');
+    
+    // Build a templet for lap
+    lapRow.innerHTML = `
+            <tr>
+                
+                <td> ${houers}: ${minute}: ${second}: ${mili} </td>
+            </tr>
+    `;
+    // Add into Html
+    lapListContent.appendChild(lapRow);
+}
+
+function getLap(){
+    const lapList = {
+        houers : document.getElementById("houers").textContent,
+        minute : document.getElementById("minute").textContent,
+        second : document.getElementById("second").textContent,
+        mili : document.getElementById("mili").textContent
+    } 
+    lapTimer(lapList);
+    //console.log(lapList);
+}
