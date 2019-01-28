@@ -71,7 +71,9 @@ function loadpage()
     string1 = storeTime.split(":");
     
     //convert string to number
-    printTime(string1[0],string1[1],string1[2],string1[3]);
+    // print time after the reload
+    
+    //printTime(string1[0],string1[1],string1[2],string1[3]);
     //timeSet(parseInt(string1[0]),parseInt(string1[1]),parseInt(string1[2]),parseInt(string1[3]));
 
 }
