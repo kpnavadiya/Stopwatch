@@ -22,6 +22,17 @@ const start = document.getElementById('start'),
 
 listener();
 
+// Check Page is reload!!! 
+if(window.performance) {
+    //console.log('work fine');
+} if(performance.navigation.type == 1) {
+    //console.log('page reload!!!');
+    //reloadPage();
+}else {
+    console.log('page is not reload!!!');
+}
+
+
 
 function listener() {
     // When start a stopwatch    
@@ -29,11 +40,24 @@ function listener() {
     stop.addEventListener('click',pauseTimer);
     reset.addEventListener('click', resetTimer); 
     lap.addEventListener('click', lapTimer);
-    shows.addEventListener('click', show);   
+    shows.addEventListener('click', show);
+    
 }
 
+///////////////////////////////////////////////////////////////////////////
+//window.onbeforeunload();
 // Function
+// When page is reload
+function reloadPage() {
+    alert ('thread');
+    var sec = document.getElementById('second').textContent;
+    localStorage.setItem("second", sec);
 
+    var sec = localStorage.getItem("second");
+    //console.log(sec);
+}
+window.onbeforeunload = reloadPage();
+/////////////////////////////////////////////////////////////////////////////
 function timeSet() {
      
     // Calculation of the time   
@@ -57,6 +81,7 @@ function timeSet() {
      timer = setTimeout(function(){
          timeSet() }, 100);   
     start.innerHTML = "Resume";    
+        
 }
 
 // Print time on Html        
@@ -103,10 +128,6 @@ function lapTimer() {
     
     lapListContent.appendChild(lapRow);    
 }
-//let t=0;
-
-// let lepTime = {
-//     houers  , minute , second , mili };
 
 // Save into local storage
 function saveInlocal(houers,minuet,second,mili) {
@@ -115,7 +136,7 @@ function saveInlocal(houers,minuet,second,mili) {
     //let timeData;
     if(houers!='00' || minuet!='00' || second != '00' || mili != '00'){
         // Check the numbers of Lap
-        if(timeStore.length <= 10){
+        if(timeStore.length >= 10){
             timeStore.shift();
         }
         let timeData = houers + ':' + minuet + ':' + second + ':' + mili;
@@ -146,23 +167,25 @@ function getTimeFromStorage() {
 // print the history of the lap from LocalStorage
 function show() {
     let timess = getTimeFromStorage();
-    console.log("Show History");
+    
+	//Remove Old History row from the tamplate
+	 removeHistory();
     //count all lap into loop
-    timess.forEach(function(houers,minute,second,mili) {
+	timess.forEach(function(lapT) {
         //create <tr> tage into html
         const row = document.createElement('tr');
 
         //print on html
         row.innerHTML = `
             <tr>
-                <td>${houers} : ${minute} : ${second} : ${mili}</td>
+                <td>${lapT} </td>
             </tr>
             `;
+			
             showLapHistory.appendChild(row);
     });
 
-    // Remove from the localStorage After Showing History
-    localStorage.clear();
+    
 }
 
 // Remove Lap
@@ -173,4 +196,13 @@ function removeLap() {
           list.removeChild(list.firstChild);
       }
     
+}
+
+// Remove old History
+function removeHistory() {
+	//Remove All the child of history 
+	var list = document.getElementById('historyList');
+      while(list.hasChildNodes()) {
+          list.removeChild(list.firstChild);
+      }
 }

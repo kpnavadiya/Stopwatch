@@ -1,7 +1,12 @@
 #heading{
-    color: aqua;
+    color: #0e445e;
     font-size: 3em;
-    text-align : center;    
+    text-align : center;
+    font-family: 'Courier New', Courier, monospace;    
+}
+.h3 {
+    color: bisque;
+    font-family : 'Courier New,' Courier, monospace;    
 }
 
 .time{
@@ -10,8 +15,11 @@
 .action{
     text-align: center;
 }
-#lapList{
+.lap-class{
     text-align: right;
+}
+.history-class{
+    text-align:  left;
 }
 
 .effact{
@@ -22,4 +30,19 @@ padding: 10px;
 border: 5px solid #0e445e;
 border-radius: 60px;
 display: inline-block;
+
 }
+.effact-1{
+    color: #0e3b23;
+font-size: 50px; 
+background: #e6e1f0;
+padding: 50px;
+border: 2px solid #0e445e;
+border-radius: 60px;
+display: inline-block;
+bottom : static;  
+text-decoration: none; 
+}
+
+
+  
