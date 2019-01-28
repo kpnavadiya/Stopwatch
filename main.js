@@ -17,7 +17,8 @@ const start = document.getElementById('start'),
       second = 0,
       minute = 0,
       houers = 0,
-      timer=0;
+      timer=0,
+       no=0;
       // Action Listener
 
 listener();
@@ -48,15 +49,33 @@ function listener() {
 //window.onbeforeunload();
 // Function
 // When page is reload
-function reloadPage() {
-    alert ('thread');
-    var sec = document.getElementById('second').textContent;
-    localStorage.setItem("second", sec);
+function reloadPage(houers,minute,second,mili) {
+    //alert ('thread');
 
-    var sec = localStorage.getItem("second");
-    //console.log(sec);
+    saveInlocal(houers,minute,second,mili);
+    console.log(second);
+    
 }
-window.onbeforeunload = reloadPage();
+//$(window).bind('onbeforeunload',reloadPage);
+window.onbeforeunload = reloadPage(houers,minute,second,mili);
+window.onload=loadpage();
+
+function loadpage()
+{
+    var arr;
+    
+    arr = getTimeFromStorage();
+    var storeTime = arr[9];
+   // Fatch the value from the Local storage
+    
+    string1 = storeTime.split(":");
+    
+    //convert string to number
+    printTime(string1[0],string1[1],string1[2],string1[3]);
+    //timeSet(parseInt(string1[0]),parseInt(string1[1]),parseInt(string1[2]),parseInt(string1[3]));
+
+}
+
 /////////////////////////////////////////////////////////////////////////////
 function timeSet() {
      
@@ -107,20 +126,23 @@ function resetTimer() {
    
    // Remove Lap History from DOM
     removeLap();
+    no = 0;
 }
 
 // Count Stopatch Lap
+
 function lapTimer() {
         //Save History in LocalStorage
         saveInlocal(houers,minute,second,mili);
 
     const lapRow = document.createElement('tr');
     
+    no++;
     // Build a templet for lap
     lapRow.innerHTML = `
            
          <tr><td><a id="list"></a></td>
-            <td> ${houers}: ${minute}: ${second}: ${mili} </td>
+           <td>${no} </td><td>  ==> </td> <td> ${houers}: ${minute}: ${second}: ${mili} </td>
                
         </tr>
     `;
@@ -174,15 +196,17 @@ function show() {
 	timess.forEach(function(lapT) {
         //create <tr> tage into html
         const row = document.createElement('tr');
-
+           
         //print on html
         row.innerHTML = `
             <tr>
-                <td>${lapT} </td>
-            </tr>
+           
+             <td>${lapT} </td>
+                         </tr>
             `;
 			
             showLapHistory.appendChild(row);
+           
     });
 
     
@@ -206,3 +230,5 @@ function removeHistory() {
           list.removeChild(list.firstChild);
       }
 }
+
+

@@ -6,7 +6,9 @@
 }
 .h3 {
     color: bisque;
-    font-family : 'Courier New,' Courier, monospace;    
+    font-family : 'Courier New'; 
+    font-size: 25px;
+    position: relative;   
 }
 
 .time{
@@ -16,11 +18,15 @@
     text-align: center;
 }
 .lap-class{
-    text-align: right;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+
 }
 .history-class{
-    text-align:  left;
-}
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;}
 
 .effact{
     color: #20bf6b;
